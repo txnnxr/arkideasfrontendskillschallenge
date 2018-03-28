@@ -1,60 +1,188 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html>
 <head>
-	<title>index</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/pos.css">
-	<script src="https://use.fontawesome.com/b4a73a7b3c.js"></script>
-	
-</head>
-
+  <title>Always on POS</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/pos.css">
+  <script src="https://use.fontawesome.com/b4a73a7b3c.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/b4a73a7b3c.css" media="all">
 <body>
-	<div id="top-bar">
-		<div class="container container-fluid clearfix">
-			<div class="pull-left"><img src="img/logo.png" alt="Always on POS" /></div>
-		</div>	
-	</div>		
-	<div id="main-nav" class="aop-light-grey-bg">
-		<div class="container container-fluid clearfix">
-			<ul class="nav nav-tabs aop-light-grey">
-			  <li role="presentation"><a href="#">AOP</a></li>
-			  <li role="presentation" class="active"><a href="#">Register</a></li>
-			  <li role="presentation"><a href="#">Inventory</a></li>
-			  <li role="presentation"><a href="#">Reports</a></li>
-			</ul>
-		</div>
-	</div>
-	<div id="sub-nav" class="aop-taupe-bg">
-		<div class="container container-fluid clearfix">
-			<ul class="nav navbar navbar-nav">
-			  <li role="presentation" class="active"><a href="#">Sales</a></li>
-			  <li class="divider-vertical"><div></div></li>
-			  <li role="presentation"><a href="#">Retrieve Sale</a></li>
-			  <li class="divider-vertical"><div></div></li>
-			  <li role="presentation"><a href="#">Open/Close Register</a></li>
-			  <li class="divider-vertical"><div></div></li>
-			  <li role="presentation"><a href="#">Price List</a></li>	
-			</ul>
-		</div>
-	</div>
-	<div id="main-content" class="aop-taupe-bg">
-		<div class="container container-fluid clearfix">
-			<div class="panel aop-panel">
-				<div class="panel-heading aop-panel-heading">
-					Register
-				</div>
-				<div class="panel-body aop-panel-body">
-					<span class="aop-heading">Items</span>
-				</div>
-				<div class="panel-footer aop-panel-footer">
-					<button class="btn btn-sm btn-default">Save</button>
-					<button class="btn btn-sm btn-primary">Pay Now</button>
-				</div>
-			</div>	
-		</div>
-	</div>			
-</body>
+
+<div id="top-bar">
+  <div class="container container-fluid clearfix">
+    <div class="pull-left"><img src="img/logo.png" alt="Always on POS"></div>
+  </div>
+</div>
+<div id="main-nav" class="aop-light-grey-bg">
+  <div class="container container-fluid clearfix">
+    <ul class="nav nav-tabs aop-light-grey">
+      <li role="presentation"><a href="#">AOP</a></li>
+      <li role="presentation" class="active"><a href="#">Register</a></li>
+      <li role="presentation"><a href="#">Inventory</a></li>
+      <li role="presentation"><a href="#">Reports</a></li>
+    </ul>
+  </div>
+</div>
+<div id="sub-nav" class="aop-taupe-bg">
+  <div class="container container-fluid clearfix">
+    <ul class="nav navbar navbar-nav">
+      <li role="presentation" class="active"><a href="#">Sales</a></li>
+      <li class="divider-vertical"><div></div></li>
+      <li role="presentation"><a href="#">Retrieve Sale</a></li>
+      <li class="divider-vertical"><div></div></li>
+      <li role="presentation"><a href="#">Open/Close Register</a></li>
+      <li class="divider-vertical"><div></div></li>
+      <li role="presentation"><a href="#">Price List</a></li>
+    </ul>
+  </div>
+</div>
+<div id="main-content" class="aop-taupe-bg">
+  <div class="container container-fluid clearfix">
+<div class="panel aop-panel">
+  <div class="panel-heading aop-panel-heading">
+    <div class="pull-right"><a class="aop-red" href="#"><i aria-hidden="true" class="fa fa-trash"></i></a></div>
+    Register
+  </div>
+  <div class="panel-body aop-panel-body" id="app">
+    <div class="row">
+        <div class="col-md-4">
+
+<div class="aop-heading">Find a Product</div>
+<div class="input-group">
+  <div class="input-group-btn">
+    <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle aop-dark-border" data-toggle="dropdown" type="button">Name<span class="caret"></span></button>
+    <ul class="dropdown-menu dropdown-menu-left">
+      <li><a href="#">Name</a></li>
+      <li><a href="#">SKU</a></li>
+      <li><a href="#">ESN</a></li>
+    </ul>
+  </div>
+  <input aria-label="..." class="form-control aop-dark-border" placeholder="Search" type="text">
+</div>
+
+<select class="form-control aop-dark-border" style="margin: 10px 0" value="">
+    <option value="" ng-reflect-value="">All Products</option>
+    <option value="Boost Topup">Boost Topup</option>
+</select>
+
+<div class="aop-item-list">
+    <ul>
+        <li class="even" v-for="product in products">
+            <button class="btn btn-link aop-item-button" v-on:click:"addToCart" v-text="product.name"></button>
+        </li>
+				<!-- <li class="odd">
+            <button class="btn btn-link aop-item-button">(B) $100 Family Plan Primary</button>
+        </li> -->
+    </ul>
+</div>
+        </div>
+        <div class="col-md-8">
+<div class="aop-heading">Shopping Cart</div>
+<div class="aop-divider"></div>
+<div id="register-items">
+    <div>
+        <div class="row aop-register-row">
+            <div class="col-md-1"><input class="form-control input-sm text-right" placeholder="Qty" type="text" value="1"></div>
+            <div class="col-md-8"><a class="btn btn-link aop-red" href="#">(B) $35 Monthly Unlimited Plan</a></div>
+            <div class="col-md-2 text-right">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon" id="sizing-addon3">$</span>
+                    <input aria-describedby="sizing-addon3" class="form-control input-sm text-right" type="text" value="35">
+                </div>
+            </div>
+            <div class="col-md-1"><button class="btn btn-link aop-red"><i aria-hidden="true" class="fa fa-times"></i></button> </div>
+        </div>
+        <div class="aop-divider"></div>
+    </div>
+</div>
+            <div class="aop-divider"></div>
+            <div class="aop-taupe-bg" style="margin-top: 10px; padding: 10px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="aop-heading-sm">Tax Rate</div>
+                        <select class="form-control aop-dark-border" style="margin: 10px 0">
+                            <option value="" selected="selected">Sales Tax</option>
+							<option value="5% Sales Tax">5% Sales Tax</option>
+							<option value="10% Sales Tax">10% Sales Tax</option>
+							<option value="15% Sales Tax">15% Sales Tax</option>
+							<option value="20% Sales Tax">20% Sales Tax</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="aop-heading-sm">Discount Code</div>
+                        <select class="form-control aop-dark-border" style="margin: 10px 0">
+							<option value="" selected="selected">Discount</option>
+							<option value="5% Discount">5% Discount</option>
+							<option value="$5 Discountt">$5 Discount</option>
+							<option value="10% Discount">10% Discount</option>
+							<option value="$10 Discount">$10 Discount</option>
+							<option value="25% Discount">25% Discount</option>
+							<option value="$25 Discount">$25 Discount</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row aop-register-total-row">
+                            <div class="col-md-6 aop-register-label">Sub Total:</div>
+                            <div class="col-md-6 text-right">$0.00</div>
+                        </div>
+                        <div class="row aop-register-total-row">
+                            <div class="col-md-6 aop-register-label">Discount:</div>
+                            <div class="col-md-6 text-right">-$0.00</div>
+                        </div>
+                        <div class="row aop-register-total-row">
+                            <div class="col-md-6 aop-register-label">Tax:</div>
+                            <div class="col-md-6 text-right">$0.00</div>
+                        </div>
+                        <div class="row aop-register-total-row">
+                            <div class="col-md-12"><div class="aop-divider-solid"></div></div>
+                        </div>
+                        <div class="row aop-register-total-row">
+                            <div class="col-md-6 aop-register-label"><strong>Total:</strong></div>
+                            <div class="col-md-6 text-right"><strong>$0.00</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="panel-footer aop-panel-footer">
+    <div class="text-right">
+        <button class="btn btn-sm btn-default">Save</button>
+        <button class="btn btn-sm btn-primary">Pay Now</button>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<script type="text/javascript">
+	var app = new Vue({
+		el: '#app',
+		data: {
+			products: [{name: 'test1'}, {name: 'test2'}],
+
+			search: '',
+
+			filter: [],
+
+			cart: [],
+
+			subTotal: 0,
+
+			discount: 0,
+
+			tax: 0,
+
+			total: 0,
+
+
+
+		}
+	})
+	</script>
+	</body>
 </html>
